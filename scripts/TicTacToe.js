@@ -1,3 +1,5 @@
+import {modal} from './Modal.js'
+
 const PLAYER_ONE = 'circle';
 const PLAYER_TWO = 'cross';
 
@@ -15,6 +17,7 @@ class Game{
     row = null;
     column = null;
     isWin = false;
+    newGameButton = document.querySelector('.start-game__button');
     
     selectCell(cell){
         if(this.isWin) return
@@ -58,16 +61,20 @@ class Game{
                 };
             })
         }
-        if(this.round > 9 && !this.isWin) alert('Draw')
+        if(this.round > 9 && !this.isWin) modal.showModal()
     }
 
     won(wonCombination, playerWon){
         wonCombination.forEach(numberElement => this.cells[numberElement].style.background = 'red')
-        alert(`${playerWon} is a winner!`)
+        modal.showModal(playerWon)
     }
 
     addListenersOnElements(){
         this.cells.forEach(cell => cell.addEventListener('click', () => this.selectCell(cell)))
+        this.newGameButton.addEventListener('click', () => {
+            modal.showModal()
+            location.reload()
+        })
     }
 
     initGame(){
