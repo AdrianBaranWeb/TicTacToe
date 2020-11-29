@@ -34,7 +34,7 @@
     background-color: rgb(255, 255, 255);
 }
 
-.round::before{
+.circle::before{
     content: '';
     display: block;
     width: 130px;
