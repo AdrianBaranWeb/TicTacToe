@@ -2,21 +2,22 @@ const PLAYER_ONE = 'round';
 const PLAYER_TWO = 'cross';
 
 class Game{
-    cells = [...document.querySelectorAll('.game__field')]
+    cells = [...document.querySelectorAll('.game__field')];
     currentGameCombination = [
         ['','',''],
         ['','',''],
         ['','',''],
-    ]
+    ];
     winGameCombinations = [
         [0,1,2], [3,4,5], [6,7,8], [0,4,8], [2,4,6], [0,3,6], [1,4,7], [2,5,8]
-    ]
+    ];
     round = 1;
     row = null;
     column = null;
     isWin = false;
     
     selectCell(cell){
+        if(this.isWin) return
         let player;
         let row = this.row;
         let column = this.column;
@@ -41,12 +42,9 @@ class Game{
             palyerPositions.push(i);
         }
         if(palyerPositions.length >= 3) this.checkCombinations(palyerPositions)
-        if(this.isWin) this.won()
     }
 
-    checkCombinations(palyerPositions){
-        if(this.round > 9 && !this.isWin) alert('Draw')
-
+    checkCombinations(palyerPositions){ 
         const winCombinations = this.winGameCombinations;
         let compatibility = 0;
         
@@ -54,14 +52,18 @@ class Game{
             compatibility = 0;
             palyerPositions.forEach(position => {
                 if(combination.includes(position)) compatibility++;
-                if(compatibility === 3) this.isWin = true;
+                if(compatibility === 3){ 
+                    this.isWin = true
+                    this.won(combination)
+                };
             })
         }
+        if(this.round > 9 && !this.isWin) alert('Draw')
     }
 
-    won(){
-        console.log('wygrana');
-        // this.cells.forEach(cell => cell.removeEventListener('click', () => this.selectCell(cell)))
+    won(wonCombination){
+        wonCombination.forEach(numberElement => this.cells[numberElement].style.background = 'red')
+        this.cells.forEach(cell => cell.removeEventListener('click', () => this.selectCell(cell)))
     }
 
     addListenersOnElements(){
