@@ -4,9 +4,9 @@ class Modal {
     container = document.querySelector('.game__modal')
     content = document.querySelector('.game__information')
 
-    showModal(winner){
+    showModal(winner, isWin){
         this.container.classList.toggle(HIDDEN_SCREEN)
-        winner ? this.content.innerHTML = `${winner} is a winner!` : this.content.innerHTML = 'Draw!'
+        isWin ? this.content.innerHTML = `${winner} is a winner!` : this.content.innerHTML = `Draw!`;
     }
 }
 
